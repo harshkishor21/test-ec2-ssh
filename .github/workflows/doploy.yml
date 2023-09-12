@@ -29,7 +29,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST '
             # Authenticate Docker to ECR
-            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
+            # aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
 
             # Pull the Docker image from ECR
             docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
