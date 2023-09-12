@@ -29,13 +29,14 @@ jobs:
         run: |
           ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST '
             # Authenticate Docker to ECR
-            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
-
+#            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
+             aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.$ECR_REGISTRY
             # Pull the Docker image from ECR
-            docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
-
-            # Run the Docker container
-            docker run -d -p 3000:3000 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
+#            docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
+            docker push $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            # Run the Docker container 
+#            docker run -d -p 3000:3000 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
+            docker run -d -p 3000:3000 $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           '
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -43,3 +44,8 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
