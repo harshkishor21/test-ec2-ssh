@@ -27,7 +27,7 @@ jobs:
 
       - name: Connect to EC2 via SSH and run a command
         run: |
-          ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST 'echo "Hello, this is working"'
+          ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST 'mkdir hell-world-here'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
