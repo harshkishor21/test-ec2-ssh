@@ -28,15 +28,15 @@ jobs:
       - name: Connect to EC2 via SSH and run Docker commands
         run: |
           ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST '
-            # Authenticate Docker to ECR
-#            aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
-             aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.$ECR_REGISTRY
-            # Pull the Docker image from ECR
-#            docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
-            docker push $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-            # Run the Docker container 
-#            docker run -d -p 3000:3000 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
-            docker run -d -p 3000:3000 $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          # Authenticate Docker to ECR
+          # aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 160149206272.dkr.ecr.us-east-2.amazonaws.com
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.$ECR_REGISTRY
+          # Pull the Docker image from ECR
+          # docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
+          docker push $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          # Run the Docker container 
+          # docker run -d -p 3000:3000 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
+          docker run -d -p 3000:3000 $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           '
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
