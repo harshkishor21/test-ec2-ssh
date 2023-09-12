@@ -16,8 +16,9 @@ jobs:
 
       - name: Set up SSH
         run: |
-          echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-          chmod 400 ssh_key.pem
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/ssh_key.pem
+          chmod 400 ~/.ssh/ssh_key.pem
           ssh-keyscan -H $REMOTE_HOST >> ~/.ssh/known_hosts
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -26,7 +27,7 @@ jobs:
 
       - name: Connect to EC2 via SSH and run a command
         run: |
-          ssh -i ssh_key.pem $REMOTE_USER@$REMOTE_HOST 'echo "Hello, this is working"'
+          ssh -i ~/.ssh/ssh_key.pem $REMOTE_USER@$REMOTE_HOST 'echo "Hello, this is working"'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
