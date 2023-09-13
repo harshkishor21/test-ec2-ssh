@@ -43,7 +43,7 @@ jobs:
           
           # Pull the Docker image from ECR
           
-          docker push $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker pull $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           # docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           
           # Run the Docker container 
