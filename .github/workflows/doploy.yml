@@ -43,7 +43,7 @@ jobs:
           
           # Pull the Docker image from ECR
           
-          docker pull $AWS_ACCOUNT_ID.$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker pull 160149206272.dkr.ecr.us-east-2.amazonaws.com/flask:latest
           # docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           
           # Run the Docker container 
